@@ -1,0 +1,40 @@
+[build-system]
+requires = ["setuptools>=68"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "tsfm-anomaly-eval"
+version = "0.1.0"
+description = "Evaluating time-series foundation models (MOMENT) for anomaly detection on simulated data and the UCR Anomaly Archive."
+readme = "README.md"
+license = { file = "LICENSE" }
+requires-python = ">=3.10"
+dependencies = [
+    "numpy>=1.24",
+    "pandas>=2.0",
+    "scikit-learn>=1.3",
+    "matplotlib>=3.7",
+    "pyyaml>=6.0",
+    "tqdm>=4.65",
+]
+
+[project.optional-dependencies]
+# PyTorch models (TranAD). MOMENT additionally needs momentfm.
+torch = ["torch>=2.0"]
+moment = ["torch>=2.0", "momentfm"]
+# VUS-ROC / VUS-PR come from TSB-UAD, which pulls in heavy dependencies.
+vus = ["TSB-UAD"]
+dev = ["pytest>=7", "ruff>=0.5"]
+
+[tool.setuptools.packages.find]
+where = ["src"]
+
+[tool.ruff]
+line-length = 100
+target-version = "py310"
+
+[tool.ruff.lint]
+select = ["E", "F", "W", "I", "B"]
+
+[tool.pytest.ini_options]
+testpaths = ["tests"]

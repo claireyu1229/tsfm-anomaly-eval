@@ -1,0 +1,30 @@
+# Data and experiment outputs are never committed.
+data/
+outputs/
+checkpoints/
+*.pt
+*.pth
+*.ckpt
+*.npz
+*.zip
+
+# Secrets and local settings
+.env
+.env.*
+
+# Python
+__pycache__/
+*.py[cod]
+*.egg-info/
+build/
+dist/
+.venv/
+venv/
+.pytest_cache/
+.ruff_cache/
+.ipynb_checkpoints/
+
+# Editors and OS
+.idea/
+.vscode/
+.DS_Store
