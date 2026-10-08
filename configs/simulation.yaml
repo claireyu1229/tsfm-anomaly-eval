@@ -1,0 +1,45 @@
+# Simulated multivariate anomaly experiment.
+# Values follow the original simulation notebook; the MOMENT section follows
+# the official-style simulated MOMENTLP script.
+
+simulation:
+  seed: 13
+  train_length: 20000
+  test_length: 20000
+  n_channels: 10
+  noise_std: 0.08
+  anomaly_start_ratio: 0.35   # every anomaly starts at 35% of the test series
+  validation_ratio: 0.20      # chronological split of the normal training series
+  output_dir: outputs/simulation
+  # Per-type overrides of start / length / channels / strength.
+  # Leave empty to use the original settings, for example:
+  #   level_shift: {start: 12000, length: 1000, shift: 1.0}
+  anomalies: {}
+
+moment:
+  model_id: AutonLab/MOMENT-1-large
+  seq_len: 512
+  patch_len: 8
+  patch_stride: 8
+  learning_rate: 5.0e-5
+  beta1: 0.9
+  beta2: 0.999
+  weight_decay: 0.05
+  min_learning_rate: 1.0e-5
+  warmup_learning_rate: 1.0e-5
+  official_warmup_steps: 1000
+  scaled_warmup_ratio: 0.10
+  gradient_clip_norm: 5.0
+  use_bfloat16_on_cuda: true
+  max_epochs: 20
+  batch_size: 16
+  train_stride: 512
+  eval_stride: 512
+  num_workers: 0
+
+evaluation:
+  threshold_mode: unique
+  adjusted_threshold_count: 100
+  vus_threshold_count: 250
+  pa_k_values: [0, 10, 20, 50]
+  include_vus: true
