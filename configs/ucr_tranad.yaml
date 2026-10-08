@@ -1,0 +1,29 @@
+# TranAD on the UCR Anomaly Archive under the same protocol as MOMENT.
+# The ucr and evaluation sections match configs/ucr_moment.yaml.
+
+ucr:
+  ucr_root: data/UCR_Anomaly_FullData
+  file_glob: "*.txt"
+  anomaly_end_inclusive: true
+  downsample_factor: 10
+  pooling_mode: max
+  validation_ratio: 0.20
+  max_datasets: null
+  seed: 13
+  device: auto
+  resume: true
+  fail_fast: true               # the original TranAD runner stopped on the first error
+  output_dir: outputs/ucr_tranad
+
+tranad:
+  window: 10
+  epochs: 5
+  learning_rate: 0.006
+  batch_size: 128
+
+evaluation:
+  threshold_mode: unique
+  adjusted_threshold_count: 100
+  vus_threshold_count: 250
+  pa_k_values: [0, 10, 20, 50]
+  include_vus: true

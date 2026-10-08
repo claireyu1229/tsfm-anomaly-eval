@@ -20,7 +20,6 @@ class UCRConfig:
     anomaly_end_inclusive: bool = True
     downsample_factor: int = 10
     pooling_mode: str = "max"
-    standardize: bool = True
     validation_ratio: float = 0.20
     max_datasets: int | None = None
     seed: int = 13

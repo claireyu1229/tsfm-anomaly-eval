@@ -1,0 +1,45 @@
+# MOMENT0 (zero-shot) and MOMENTLP (linear probing) on the UCR Anomaly Archive.
+# Values follow the original UCR benchmark notebook.
+
+ucr:
+  ucr_root: data/UCR_Anomaly_FullData
+  file_glob: "*.txt"
+  anomaly_end_inclusive: true   # UCR filename endpoints are inclusive
+  downsample_factor: 10         # non-overlapping max pooling; labels are max-pooled too
+  pooling_mode: max
+  validation_ratio: 0.20        # chronological split of the normal training segment
+  max_datasets: null            # null = all 250 series
+  seed: 13
+  device: auto
+  resume: true
+  fail_fast: false              # log a failing series to errors.csv and continue
+  output_dir: outputs/ucr_moment
+
+moment:
+  model_id: AutonLab/MOMENT-1-large
+  seq_len: 512
+  patch_len: 8
+  patch_stride: 8
+  learning_rate: 1.0e-4
+  beta1: 0.9
+  beta2: 0.999
+  weight_decay: 0.05
+  min_learning_rate: 1.0e-5
+  warmup_learning_rate: 1.0e-5
+  official_warmup_steps: 1000
+  scaled_warmup_ratio: 0.10
+  gradient_clip_norm: 5.0
+  use_bfloat16_on_cuda: true
+  max_epochs: 20
+  batch_size: 16
+  train_stride: 512
+  eval_stride: 512
+  num_workers: 0
+  run_zero_shot_baseline: true
+
+evaluation:
+  threshold_mode: unique
+  adjusted_threshold_count: 100
+  vus_threshold_count: 250
+  pa_k_values: [0, 10, 20, 50]
+  include_vus: true
