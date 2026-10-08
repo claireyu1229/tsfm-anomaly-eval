@@ -1,12 +1,21 @@
 # tsfm-anomaly-eval
 
 [![CI](https://github.com/claireyu1229/tsfm-anomaly-eval/actions/workflows/ci.yml/badge.svg)](https://github.com/claireyu1229/tsfm-anomaly-eval/actions/workflows/ci.yml)
+![Python](https://img.shields.io/badge/python-3.10%20%7C%203.12-blue)
+[![License: MIT](https://img.shields.io/badge/license-MIT-green)](LICENSE)
 
 ## 概要
 
 時系列基盤モデル **MOMENT** を異常検知に使ったとき、**どんな異常に強く、どんな異常に弱いのか**を調べるための評価コードです。
 5 種類の異常を入れたシミュレーションデータと、UCR Anomaly Archive の 250 データを、**同じ前処理・同じ指標**で評価します。
 現在は MOMENT の zero-shot と linear probing、比較用の TranAD を実装済みで、結果は実験・分析中です。
+
+### このリポジトリの見どころ
+
+- **全モデル共通の評価手順**：MOMENT も TranAD も、同じ読み込み・分割・指標のコードを通ります（[`scripts/run_ucr_benchmark.py`](scripts/run_ucr_benchmark.py)、[`configs/`](configs/)）。
+- **データリーク対策をテストで確認**：時間順の分割と、学習区間だけでのスケーリングを検証しています（[`tests/test_preprocess.py`](tests/test_preprocess.py)）。
+- **指標の実装を素朴な実装と突き合わせ**：高速化したしきい値探索が、1 つずつ調べるループと完全に同じ値になることを確かめています（[`tests/test_metrics.py`](tests/test_metrics.py)）。
+- **GPU なしで試せるデモと CI**：CPU だけで数十秒で動き、push のたびに ruff と pytest が自動で走ります。
 
 ## 背景と目的
 
